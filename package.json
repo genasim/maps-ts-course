@@ -17,5 +17,8 @@
   "homepage": "https://github.com/genasim/maps-ts-course#readme",
   "dependencies": {
     "@faker-js/faker": "^7.6.0"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.55.12"
   }
 }
