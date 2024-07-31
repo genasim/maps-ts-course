@@ -1,15 +1,14 @@
-/// <reference types="@types/google.maps" />
-// import User from "./User";
+import CustomMap from "./CustomMap";
+import { loadLibraries } from "./libraries-loader.ts";
+import User from "./User";
 
-let map: google.maps.Map;
-async function initMap(): Promise<void> {
-  const { Map } = (await google.maps.importLibrary(
-    "maps"
-  )) as google.maps.MapsLibrary;
-  map = new Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: 0, lng: 0 },
-    zoom: 1,
-  });
-}
+loadLibraries
+  .then(() => {
+    const map = new CustomMap("map");
+    const user = new User();
 
-initMap();
+    map.addUserMarker(user);
+  })
+  .catch((error) =>
+    console.error(`Error loading libraries: ${(error as Error).message}`)
+  );
