@@ -23,9 +23,16 @@ export default class CustomMap {
         lat: user.location.lat,
         lng: user.location.lng,
       },
-      title: "Uluru",
     });
   }
 
-  public addCompanyMarker(company: Company): void {}
+  public addCompanyMarker(company: Company): void {
+    new google.maps.marker.AdvancedMarkerElement({
+        map: this.googleMap,
+        position: {
+          lat: company.location.lat,
+          lng: company.location.lng,
+        },
+      });
+  }
 }
