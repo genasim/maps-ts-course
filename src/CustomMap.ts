@@ -1,6 +1,11 @@
 /// <reference types="@types/google.maps" />
-import Company from "./Company";
-import User from "./User";
+
+export interface Mappable {
+  location: {
+    lat: number;
+    lng: number;
+  };
+}
 
 export default class CustomMap {
   private googleMap: google.maps.Map;
@@ -10,29 +15,27 @@ export default class CustomMap {
       document.getElementById(divId) as HTMLElement,
       {
         center: { lat: 0, lng: 0 },
-        zoom: 1,
+        zoom: 3,
         mapId: "asfasfs",
       }
     );
   }
 
-  public addUserMarker(user: User) {
-    new google.maps.marker.AdvancedMarkerElement({
+  public addMarker(mappable: Mappable) {
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       map: this.googleMap,
       position: {
-        lat: user.location.lat,
-        lng: user.location.lng,
+        lat: mappable.location.lat,
+        lng: mappable.location.lng,
       },
     });
-  }
 
-  public addCompanyMarker(company: Company): void {
-    new google.maps.marker.AdvancedMarkerElement({
-        map: this.googleMap,
-        position: {
-          lat: company.location.lat,
-          lng: company.location.lng,
-        },
+    marker.addListener("click", () => {
+      const infoWindow = new google.maps.InfoWindow({
+        content: "Hi there",
       });
+
+      infoWindow.open(this.googleMap, marker);
+    });
   }
 }
